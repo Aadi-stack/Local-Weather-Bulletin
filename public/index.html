@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Station Report — Weather</title>
+<meta name="description" content="A weather bulletin: current conditions, hourly ticker, and a 7-day outlook." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;1,9..144,420&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">Station Report</div>
+      <div class="masthead-title">Local Weather Bulletin</div>
+    </div>
+    <div id="clock" aria-live="off"></div>
+  </div>
+
+  <form id="search-form" autocomplete="off">
+    <div class="search-row">
+      <div class="search-field">
+        <label for="city-input" class="visually-hidden">Search for a city</label>
+        <input type="text" id="city-input" placeholder="Enter a city, e.g. Dasūya or Lisbon" role="combobox" aria-expanded="false" aria-controls="suggestions" aria-autocomplete="list" />
+        <ul id="suggestions" role="listbox"></ul>
+      </div>
+      <button type="button" class="btn-geo" id="geo-btn" title="Use my location">◎ Locate</button>
+    </div>
+  </form>
+  <div class="search-help">Search a place, or use your location.</div>
+
+  <div id="status" class="status-panel" hidden></div>
+
+  <section id="current" aria-live="polite">
+    <div class="loc-line">
+      <div class="loc-name" id="loc-name">—</div>
+      <div class="loc-coords" id="loc-coords"></div>
+    </div>
+
+    <div class="current-grid">
+      <div class="temp-block">
+        <div class="temp-big"><span id="temp-value">—</span><span id="temp-unit">°</span></div>
+        <div class="temp-cond" id="cond-text"></div>
+        <div class="temp-feels" id="feels-like"></div>
+      </div>
+
+      <div class="instrument">
+        <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="var(--line-strong)" stroke-width="1"/>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="1 7"/>
+          <text x="50" y="12" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="var(--ink-faint)">N</text>
+          <text x="90" y="53" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="var(--ink-faint)">E</text>
+          <text x="50" y="94" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="var(--ink-faint)">S</text>
+          <text x="10" y="53" text-anchor="middle" font-family="IBM Plex Mono" font-size="7" fill="var(--ink-faint)">W</text>
+          <g id="wind-needle">
+            <line x1="50" y1="50" x2="50" y2="20" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+            <polygon points="50,15 45,24 55,24" fill="var(--accent)"/>
+            <circle cx="50" cy="50" r="3.5" fill="var(--ink)"/>
+          </g>
+        </svg>
+        <div class="instrument-label"><span id="wind-speed">—</span> · <span id="wind-dir">—</span></div>
+      </div>
+
+      <div class="stat-list">
+        <div><span>Humidity</span><span id="stat-humidity">—</span></div>
+        <div><span>Pressure</span><span id="stat-pressure">—</span></div>
+        <div><span>Precip.</span><span id="stat-precip">—</span></div>
+        <div><span>Sunset</span><span id="stat-sunset">—</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">Next 24 Hours</div>
+    <div id="hourly-ticker"></div>
+
+    <div class="section-label">7-Day Outlook</div>
+    <table id="daily-table"><tbody id="daily-body"></tbody></table>
+
+    <footer>
+      <span id="footer-note">Not for navigation or emergency use</span>
+      <span class="unit-toggle" role="group" aria-label="Temperature unit">
+        <button type="button" id="unit-c" class="active">°C</button><button type="button" id="unit-f">°F</button>
+      </span>
+    </footer>
+  </section>
+
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
